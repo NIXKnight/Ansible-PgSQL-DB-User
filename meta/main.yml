@@ -1,0 +1,12 @@
+dependencies: []
+galaxy_info:
+  author: Saad Ali
+  description: Ansible role for creating PostgreSQL databases and users.
+  license: license (MIT)
+  min_ansible_version: 2.14
+  platforms:
+  - name: Debian
+    versions:
+      - bullseye
+  galaxy_tags:
+    - postgresql

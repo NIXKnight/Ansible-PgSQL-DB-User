@@ -1,0 +1,17 @@
+---
+# defaults file for Ansible-PgSQL-DB-User
+postgresql_login_host: "127.0.0.1"
+postgresql_login_username: "postgres"
+postgresql_login_password: ""
+
+postgresql_db_users: []
+# Define a list of database users and privileges
+#   - db_name: ""
+#     username: ""
+#     password: ""
+#     encoding: "UTF-8"
+#     lc_collate: "en_US.UTF-8"
+#     lc_ctype: "en_US.UTF-8"
+#     privileges: "ALL"
+#     db_objects: "ALL_DEFAULT"
+#     db_object_type: "default_privs"
