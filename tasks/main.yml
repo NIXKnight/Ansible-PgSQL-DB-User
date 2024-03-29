@@ -6,9 +6,10 @@
         login_user: "{{ postgresql_login_username }}"
         login_password: "{{ postgresql_login_password }}"
         name: "{{ item.db_name }}"
-        encoding: "{{ item. }}"
+        encoding: "{{ item.encoding }}"
         lc_collate: "{{ item.lc_collate }}"
         lc_ctype: "{{ item.lc_ctype }}"
+        template: "template0"
       with_items: "{{ postgresql_db_users }}"
 
     - name: Ensure Users Exist
