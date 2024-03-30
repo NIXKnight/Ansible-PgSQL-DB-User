@@ -1,34 +1,31 @@
 ---
 # tasks file for Ansible-PgSQL-DB-User
-    - name: Ensure Databases Exist
-      community.postgresql.postgresql_db:
-        login_host: "{{ postgresql_login_host }}"
-        login_user: "{{ postgresql_login_username }}"
-        login_password: "{{ postgresql_login_password }}"
-        name: "{{ item.db_name }}"
-        encoding: "{{ item.encoding }}"
-        lc_collate: "{{ item.lc_collate }}"
-        lc_ctype: "{{ item.lc_ctype }}"
-        template: "template0"
-      with_items: "{{ postgresql_db_users }}"
+- name: Ensure Databases Exist
+  community.postgresql.postgresql_db:
+    login_host: "{{ postgresql_login_host }}"
+    login_user: "{{ postgresql_login_username }}"
+    login_password: "{{ postgresql_login_password }}"
+    name: "{{ item.db_name }}"
+    encoding: "{{ item.encoding }}"
+    lc_collate: "{{ item.lc_collate }}"
+    lc_ctype: "{{ item.lc_ctype }}"
+    template: "template0"
+  with_items: "{{ postgresql_db_users }}"
 
-    - name: Ensure Users Exist
-      community.postgresql.postgresql_user:
-        login_host: "{{ postgresql_login_host }}"
-        login_user: "{{ postgresql_login_username }}"
-        login_password: "{{ postgresql_login_password }}"
-        name: "{{ item.username }}"
-        password: "{{ item.password }}"
-      with_items: "{{ postgresql_db_users }}"
+- name: Ensure Users Exist
+  community.postgresql.postgresql_user:
+    login_host: "{{ postgresql_login_host }}"
+    login_user: "{{ postgresql_login_username }}"
+    login_password: "{{ postgresql_login_password }}"
+    name: "{{ item.username }}"
+    password: "{{ item.password }}"
+  with_items: "{{ postgresql_db_users }}"
 
-    - name: Ensure User Privileges are Set Properly
-      community.postgresql.postgresql_privs:
-        login_host: "{{ postgresql_login_host }}"
-        login_user: "{{ postgresql_login_username }}"
-        login_password: "{{ postgresql_login_password }}"
-        roles: "{{ item.username }}"
-        db: "{{ item.db_name }}"
-        privs: "{{ item.privileges }}"
-        objs: "{{ item.db_objects }}"
-        type: "{{ item.db_object_type }}"
-      with_items: "{{ postgresql_db_users }}"
+- name: Ensure Default Privileges for Users
+  community.postgresql.postgresql_query:
+    login_host: "{{ postgresql_login_host }}"
+    login_user: "{{ postgresql_login_username }}"
+    login_password: "{{ postgresql_login_password }}"
+    db: "{{ item.db_name }}"
+    query: "{{ lookup('template', 'queries.sql.j2') }}"
+  with_items: "{{ postgresql_db_users }}"
