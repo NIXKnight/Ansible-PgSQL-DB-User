@@ -1,4 +1,7 @@
 GRANT CONNECT ON DATABASE "{{ item.db_name }}" TO "{{ item.username }}";
+GRANT CREATE ON DATABASE "{{ item.db_name }}" TO "{{ item.username }}";
+GRANT USAGE ON SCHEMA public TO "{{ item.username }}";
+GRANT CREATE ON SCHEMA public TO "{{ item.username }}";
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON TABLES TO "{{ item.username }}";
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON SEQUENCES TO "{{ item.username }}";
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON FUNCTIONS TO "{{ item.username }}";
